@@ -16,6 +16,8 @@ export const routerConfig:RouterConfig = {
         HOME:"/",
     },
     API:{
-        GET_TODOS:"/",
+        GET_TODOS:"/api/todo",
     }
 }
+
+
