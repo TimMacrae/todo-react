@@ -1,11 +1,11 @@
 import {routerConfig} from "./routerConfig.ts";
 import {Route, Routes} from "react-router-dom";
-import {HomePage} from "./HomePage.tsx";
+import {TodoPage} from "./TodoPage.tsx";
 
 export function Router() {
     return (
         <Routes>
-            <Route path={routerConfig.URL.HOME} element={<HomePage />} />
+            <Route path={routerConfig.URL.HOME} element={<TodoPage />} />
 
         </Routes>
     )
