@@ -5,7 +5,7 @@ import type {Todo as TodoType, TodoGetResponse} from "../components/todo/types.t
 import {TodoStatusColumn} from "../components/todo/TodoStatusColumn.tsx";
 import {TodoCreate} from "../components/todo/TodoCreate.tsx";
 
-export function TodoPage() {
+export function TodosPage() {
     const [todos, setTodos] = useState<TodoType[]>([])
 
 
