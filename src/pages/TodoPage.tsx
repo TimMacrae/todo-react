@@ -1,38 +1,91 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
+import {useNavigate, useParams} from "react-router-dom";
+import {type FormEvent, useEffect, useState} from "react";
 import {routerConfig} from "./routerConfig.ts";
-import type {Todo as TodoType, TodoGetResponse} from "../components/todo/types.ts";
-import {TodoStatusColumn} from "../components/todo/TodoStatusColumn.tsx";
-import {TodoCreate} from "../components/todo/TodoCreate.tsx";
+import axios from "axios";
+import {type Todo} from "../components/todo/types.ts"
+import {status} from "../components/todo/status.ts";
 
 export function TodoPage() {
-    const [todos, setTodos] = useState<TodoType[]>([])
+    const navigate = useNavigate()
+    const [todo, setTodo] = useState<Todo>()
+    const [editText, setEditText] = useState("");
+    const [editStatus, setEditStatus] = useState("OPEN");
 
+    const {id} = useParams()
 
-    const getTodos = async (): Promise<void> => {
+    const getTodo = async () => {
         try {
-            const response: TodoGetResponse = await axios.get(routerConfig.API.TODOS);
-            setTodos(response?.data || [])
-        } catch (error) {
-            console.error(error)
+            const response = await axios.get(`${routerConfig.API.TODOS}/${id}`)
+            if (response.status === 200) {
+                setTodo(response.data)
+                setEditStatus(response.data.status)
+                setEditText(response.data.description)
+            }
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const handleSubmit = async (e: FormEvent): Promise<void> => {
+        e.preventDefault();
+        try {
+            if (todo) {
+                const response = await axios.put(`${routerConfig.API.TODOS}/${todo.id}/update`, {
+                    ...todo,
+                    description: editText,
+                    status: editStatus
+                });
+                if (response.status === 200) {
+                    navigate(routerConfig.URL.HOME);
+                }
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
 
     useEffect(() => {
-        getTodos()
-    }, []);
-
-    console.log(todos);
+            getTodo()
+        },
+        [])
 
     return (
-        <>
-            <div className=" flex justify-between items-end mb-12">
-            <h1 className="font-bold text-xs ">Todos tracker</h1>
-            <TodoCreate getTodos={getTodos} /></div>
-            <section className="grid grid-cols-3 gap-x-2">
-                <TodoStatusColumn status={"OPEN"} todos={todos} getTodos={getTodos} />
-                <TodoStatusColumn status={"IN_PROGRESS"} todos={todos} getTodos={getTodos}  />
-                <TodoStatusColumn status={"DONE"} todos={todos} getTodos={getTodos}  />
-            </section>
-        </>)
+        <div className="w-full flex flex-col items-center h-screen justify-center">
+            <form
+                onSubmit={handleSubmit}
+                className="w-[300px] flex gap-2  flex-col "
+            >
+                <div>
+                    <label className="block text-left mb-2" htmlFor="text">Edit description</label>
+                    <input
+                        type="text"
+                        name="text"
+                        value={editText}
+                        onChange={e => setEditText(e.target.value)}
+                        className="border rounded px-2 py-1 w-full"
+                    />
+                </div>
+                <div>
+                    <label className="block text-left mb-2" htmlFor="status">Edit status</label>
+
+                    <select
+                        name="status"
+                        value={editStatus}
+                        onChange={e => setEditStatus(e.target.value)}
+                        className="border rounded px-2 py-1 w-full"
+                    >
+                        <option value={status.OPEN}>{status.OPEN}</option>
+                        <option value={status.IN_PROGRESS}>{status.IN_PROGRESS}</option>
+                        <option value={status.DONE}>{status.DONE}</option>
+                    </select>
+                </div>
+                <button
+                    type="submit"
+                    className="border px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 transition"
+                >
+                    Save
+                </button>
+            </form>
+        </div>
+    )
 }
