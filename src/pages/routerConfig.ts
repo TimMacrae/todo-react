@@ -8,7 +8,7 @@ type URL = {
 }
 
 type API = {
-    GET_TODOS: string,
+    TODOS: string,
 }
 
 export const routerConfig:RouterConfig = {
@@ -16,7 +16,7 @@ export const routerConfig:RouterConfig = {
         HOME:"/",
     },
     API:{
-        GET_TODOS:"/api/todo",
+        TODOS:"/api/todo",
     }
 }
 

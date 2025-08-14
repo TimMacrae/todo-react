@@ -3,6 +3,7 @@ import axios from "axios";
 import {routerConfig} from "./routerConfig.ts";
 import type {Todo as TodoType, TodoGetResponse} from "../components/todo/types.ts";
 import {TodoStatusColumn} from "../components/todo/TodoStatusColumn.tsx";
+import {TodoCreate} from "../components/todo/TodoCreate.tsx";
 
 export function TodoPage() {
     const [todos, setTodos] = useState<TodoType[]>([])
@@ -10,8 +11,7 @@ export function TodoPage() {
 
     const getTodos = async (): Promise<void> => {
         try {
-            const response: TodoGetResponse = await axios.get(routerConfig.API.GET_TODOS);
-            console.log(response);
+            const response: TodoGetResponse = await axios.get(routerConfig.API.TODOS);
             setTodos(response?.data || [])
         } catch (error) {
             console.error(error)
@@ -26,7 +26,9 @@ export function TodoPage() {
 
     return (
         <>
-            <h1 className="text-3xl font-bold mb-8" >Todos tracker</h1>
+            <div className=" flex justify-between items-end mb-12">
+            <h1 className="font-bold text-xs ">Todos tracker</h1>
+            <TodoCreate getTodos={getTodos} /></div>
             <section className="grid grid-cols-3 gap-x-2">
                 <TodoStatusColumn status={"OPEN"} todos={todos} getTodos={getTodos} />
                 <TodoStatusColumn status={"IN_PROGRESS"} todos={todos} getTodos={getTodos}  />
