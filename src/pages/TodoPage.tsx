@@ -3,6 +3,7 @@ import {type FormEvent, useEffect, useState} from "react";
 import {routerConfig} from "./routerConfig.ts";
 import axios from "axios";
 import {type Todo} from "../components/todo/types.ts"
+import {status} from "../components/todo/status.ts";
 
 export function TodoPage() {
     const navigate = useNavigate()
@@ -73,9 +74,9 @@ export function TodoPage() {
                         onChange={e => setEditStatus(e.target.value)}
                         className="border rounded px-2 py-1 w-full"
                     >
-                        <option value="OPEN">OPEN</option>
-                        <option value="IN_PROGRESS">IN_PROGRESS</option>
-                        <option value="DONE">DONE</option>
+                        <option value={status.OPEN}>{status.OPEN}</option>
+                        <option value={status.IN_PROGRESS}>{status.IN_PROGRESS}</option>
+                        <option value={status.DONE}>{status.DONE}</option>
                     </select>
                 </div>
                 <button
