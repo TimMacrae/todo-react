@@ -56,7 +56,7 @@ export function TodoPage() {
                 className="w-[300px] flex gap-2  flex-col "
             >
                 <div>
-                    <label className="block text-left mb-2" htmlFor="text">Todo description</label>
+                    <label className="block text-left mb-2" htmlFor="text">Edit description</label>
                     <input
                         type="text"
                         name="text"
@@ -66,7 +66,7 @@ export function TodoPage() {
                     />
                 </div>
                 <div>
-                    <label className="block text-left mb-2" htmlFor="status">Todo status</label>
+                    <label className="block text-left mb-2" htmlFor="status">Edit status</label>
 
                     <select
                         name="status"
