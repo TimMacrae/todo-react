@@ -1,6 +1,7 @@
 import {MoveRight, MoveLeft} from "lucide-react";
 import type {Status, Todo} from "./types.ts";
 import axios from "axios";
+import {status as statusConst} from "./status.ts";
 
 type TodoStatusButtonProps = {
     statusColors: string;
@@ -22,15 +23,15 @@ export function TodoStatusButton({todo , status, statusColors, getTodos}: TodoSt
             console.log(error);
         }
     }
-console.log(status);
+
     return (
         <button
             onClick={() => handleUpdateTodoStatus()}
             className={`px-2 py-1 font-bold self-start  ${statusColors} rounded text-xs flex items-center gap-1 transition`}>
-            {status === "IN_PROGRESS" && todo.status === "OPEN" && <MoveRight/> }
-            {status === "OPEN" && todo.status === "IN_PROGRESS" && <MoveLeft/> }
-            {status === "IN_PROGRESS" && todo.status === "DONE" && <MoveLeft/> }
-            {status === "DONE" && <MoveRight/> }
+            {status === statusConst.IN_PROGRESS && todo.status === statusConst.OPEN && <MoveRight/> }
+            {status === statusConst.OPEN && todo.status === statusConst.IN_PROGRESS && <MoveLeft/> }
+            {status === statusConst.IN_PROGRESS && todo.status === statusConst.DONE && <MoveLeft/> }
+            {status === statusConst.DONE && <MoveRight/> }
         </button>)
 }
 

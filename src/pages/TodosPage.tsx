@@ -22,8 +22,6 @@ export function TodosPage() {
         getTodos()
     }, []);
 
-    console.log(todos);
-
     return (
         <>
             <div className=" flex justify-between items-end mb-12">
