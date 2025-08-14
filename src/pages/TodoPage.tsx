@@ -47,7 +47,7 @@ export function TodoPage() {
     useEffect(() => {
             getTodo()
         },
-        [id])
+        [])
 
     return (
         <div className="w-full flex flex-col items-center h-screen justify-center">
