@@ -12,7 +12,6 @@ export function TodoPage() {
     const getTodos = async (): Promise<void> => {
         try {
             const response: TodoGetResponse = await axios.get(routerConfig.API.TODOS);
-            console.log(response);
             setTodos(response?.data || [])
         } catch (error) {
             console.error(error)

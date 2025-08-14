@@ -9,7 +9,6 @@ type TodoActionsProps = {
 
 export function TodoActions({todo, getTodos}: TodoActionsProps) {
     const todoStatus = todo.status;
-    console.log("COLOR",statusColor[status.OPEN])
     switch (todoStatus) {
         case status.OPEN:
             return (

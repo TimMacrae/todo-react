@@ -13,7 +13,7 @@ export function TodoCreate({getTodos}: TodoStatusProps) {
     const [text, setText] = useState("");
 
     const postAddTodo = async (): Promise<void> => {
-        const newTodo = {id: uuidv4(), description: text, status: status.OPEN}
+        const newTodo = {id: uuidv4(), description: text.trim(), status: status.OPEN}
         const response = await axios.post(routerConfig.API.TODOS,newTodo );
         if(response.status === 200){
             getTodos();
